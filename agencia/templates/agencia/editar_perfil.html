@@ -1,0 +1,38 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Editar Perfil - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">Editar Perfil</h2>
+                    
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <fieldset>
+                            <legend class="fs-5 mb-3">Datos Personales</legend>
+                            {{ user_form.as_p }}
+                        </fieldset>
+
+                        <hr class="my-4">
+
+                        <fieldset>
+                            <legend class="fs-5 mb-3">Datos de Contacto</legend>
+                            {{ cliente_form.as_p }}
+                        </fieldset>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a href="{% url 'agencia:perfil_usuario' %}" class="btn btn-outline-secondary me-2">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

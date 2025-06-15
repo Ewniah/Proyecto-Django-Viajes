@@ -1,0 +1,52 @@
+{% extends "agencia/base.html" %}
+{% load agencia_extras %} {% block title %}Procesar Pago - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-lg">
+                <div class="card-header bg-dark-pizarra text-white text-center">
+                    <h2 class="mb-0">Procesar Pago</h2>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <h5 class="card-title">Resumen de tu Reserva</h5>
+                    <p>Estás a punto de pagar por el siguiente paquete:</p>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                            Paquete:
+                            <strong>{{ reserva.id_paquete.descripcion }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                            Destino:
+                            <strong>{{ reserva.id_paquete.destino }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                            Precio Total:
+                            <strong class="fs-5" style="color: var(--color-verde-esmeralda);">${{ reserva.id_paquete.precio|punto_mil }} CLP</strong>
+                        </li>
+                    </ul>
+
+                    <h5 class="card-title mt-4">Selecciona un método de pago</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="list-group">
+                            <label class="list-group-item list-group-item-action">
+                                <input class="form-check-input me-2" type="radio" name="metodo_pago" value="Débito" checked>
+                                <i class="fas fa-credit-card me-2" style="color: var(--color-naranja-vivido);"></i> Tarjeta de Débito
+                            </label>
+                            <label class="list-group-item list-group-item-action">
+                                <input class="form-check-input me-2" type="radio" name="metodo_pago" value="Crédito">
+                                <i class="far fa-credit-card me-2" style="color: var(--color-naranja-vivido);"></i> Tarjeta de Crédito
+                            </label>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Pagar Ahora</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

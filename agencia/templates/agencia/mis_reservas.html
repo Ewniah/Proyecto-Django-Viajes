@@ -1,0 +1,51 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Mis Reservas - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Mis Reservas</h1>
+
+    {% if reservas %}
+        <div class="list-group">
+            {% for reserva in reservas %}
+                <a href="{% url 'agencia:detalle_reserva' id_reserva=reserva.id_reserva %}" class="list-group-item list-group-item-action flex-column align-items-start mb-3 shadow-sm rounded">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 fw-bold">{{ reserva.id_paquete.descripcion }}</h5>
+                        <small class="text-muted">{{ reserva.fecha_reserva|date:"d M, Y" }}</small>
+                    </div>
+                    <p class="mb-1">
+                        <strong>Destino:</strong> {{ reserva.id_paquete.destino }} <br>
+                        <strong>ID de Reserva:</strong> {{ reserva.id_reserva }}
+                    </p>
+                    <div class="mt-2 d-flex align-items-center">
+                        <strong class="me-2">Estado:</strong>
+                        
+                        {% if reserva.estado == 'Reservado' %}
+                            <span class="badge bg-info text-dark">Reservado</span>
+                        {% elif reserva.estado == 'Pagado' %}
+                            <span class="badge" style="background-color: var(--color-verde-esmeralda);">Pagado</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ reserva.estado }}</span>
+                        {% endif %}
+
+                        {% if reserva.estado != 'Cancelada' %}
+                        <form action="{% url 'agencia:cancelar_reserva' id_reserva=reserva.id_reserva %}" method="post" class="ms-auto">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </a> {% endfor %}
+        </div>
+    {% else %}
+        <div class="card text-center shadow-sm">
+            <div class="card-body p-5">
+                <h5 class="card-title">Aún no has realizado ninguna reserva</h5>
+                <p class="card-text">¡Anímate a explorar nuestros destinos y encuentra tu próxima aventura!</p>
+                <a href="{% url 'agencia:listar_paquetes' %}" class="btn btn-accent mt-3">Ver Paquetes de Viaje</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

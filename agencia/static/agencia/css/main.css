@@ -1,0 +1,206 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-gris-carbon);
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+        url('../images/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+main {
+    flex-grow: 1;
+}
+
+
+/* ---- 2. PALETA DE COLORES ---- */
+:root {
+  --color-verde-esmeralda: #5A9C74;
+  --color-verde-esmeralda-hover: #4a8a64;
+  --color-arena-dorada: #EACD9F;
+  --color-naranja-vivido: #FF7043;
+  --color-naranja-vivido-hover: #fa5a2a;
+  --color-gris-carbon: #333333;
+  --color-texto-claro: #FFFFFF;
+}
+
+/* ---- 3. ESTILOS GLOBALES Y COMPONENTES ---- */
+a {
+    color: var(--color-naranja-vivido);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: var(--color-naranja-vivido-hover);
+    text-decoration: none;
+}
+
+/* Barra de Navegación */
+.bg-dark-pizarra {
+    background-color: var(--color-gris-carbon);
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--color-verde-esmeralda);
+    border-color: var(--color-verde-esmeralda);
+    color: var(--color-texto-claro);
+    font-weight: bold;
+    padding: 0.6rem 1.2rem;
+    transition: background-color 0.2s ease-in-out;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--color-verde-esmeralda-hover);
+    border-color: var(--color-verde-esmeralda-hover);
+    color: var(--color-texto-claro);
+}
+
+.btn-accent {
+    background-color: var(--color-naranja-vivido);
+    border-color: var(--color-naranja-vivido);
+    color: var(--color-texto-claro);
+    font-weight: bold;
+    padding: 0.6rem 1.2rem;
+    transition: background-color 0.2s ease-in-out;
+}
+.btn-accent:hover, .btn-accent:focus {
+    background-color: var(--color-naranja-vivido-hover);
+    border-color: var(--color-naranja-vivido-hover);
+    color: var(--color-texto-claro);
+}
+
+/* Enlaces de la Navbar */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+}
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
+    color: var(--color-texto-claro);
+}
+.navbar-dark .navbar-brand {
+    color: var(--color-texto-claro);
+}
+
+
+/* ---- 4. ESTILOS DE PÁGINAS ESPECÍFICAS ---- */
+
+/* Título de página con contraste */
+.page-title-contrast {
+    color: var(--color-gris-carbon);
+    text-shadow: 0px 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+/* Sección Hero (Página de Inicio) */
+.hero-section {
+    background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070') no-repeat center center;
+    background-size: cover;
+    height: 60vh;
+    min-height: 400px;
+    background-color: rgba(51, 51, 51, 0.4);
+    background-blend-mode: overlay;
+}
+
+/* Tarjetas y Secciones con fondo semi-transparente */
+.card, .section-bg-transparent {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.85); /* Unificamos el estilo aquí */
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+}
+.package-card {
+    transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+.package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+.package-card .text-success {
+    color: var(--color-verde-esmeralda) !important;
+}
+
+/* Color corregido para el banner CTA y los íconos de la página de inicio */
+.bg-cta {
+    background-color: var(--color-verde-esmeralda);
+}
+.text-primary-custom {
+    color: var(--color-verde-esmeralda);
+}
+
+
+/* ---- 5. AJUSTES PARA WIDGETS Y COMPONENTES ESPECIALES ---- */
+
+/* Campo de teléfono intl-tel-input */
+.iti {
+    width: 100%;
+}
+
+/* Estilos para Pestañas (Tabs) de Bootstrap */
+.nav-tabs {
+    border-bottom-color: #dee2e6;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    background: rgba(230, 230, 230, 0.7);
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: var(--color-gris-carbon);
+    opacity: 0.8;
+}
+.nav-tabs .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: bold;
+    opacity: 1;
+}
+.tab-content.card {
+    border-top-left-radius: 0;
+    /* Hacemos que el fondo del contenido de la pestaña coincida con el de la pestaña activa */
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* ---- 6. ESTILOS PARA ALERTAS / MENSAJES ---- */
+.alert {
+    border-width: 0;
+    border-left: 5px solid;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    color: var(--color-gris-carbon);
+}
+.alert-error, .alert-danger {
+    background-color: #fdecea;
+    border-color: #e57373;
+}
+.alert-success {
+    background-color: #e8f5e9;
+    border-color: var(--color-verde-esmeralda);
+}
+.alert-info {
+    background-color: #e3f2fd;
+    border-color: #64b5f6;
+}
+
+/* ---- 7. ESTILOS PARA EL CARRUSEL DE IMÁGENES ---- */
+.carousel-item img {
+    height: 450px;
+    object-fit: cover;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 1.2rem;
+    background-size: 50% 50%;
+}
+#testimonialsCarousel .carousel-control-prev-icon,
+#testimonialsCarousel .carousel-control-next-icon {
+    display: none;
+}

@@ -1,0 +1,88 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Registro - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-lg my-5">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4 fw-bold">Crea tu Cuenta</h2>
+                    
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
+                                {{ form.nombre }}
+                                {% if form.nombre.errors %}<div class="text-danger small mt-1">{{ form.nombre.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.apellido.id_for_label }}" class="form-label">{{ form.apellido.label }}</label>
+                                {{ form.apellido }}
+                                {% if form.apellido.errors %}<div class="text-danger small mt-1">{{ form.apellido.errors|striptags }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|striptags }}</div>{% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.rut.id_for_label }}" class="form-label">{{ form.rut.label }}</label>
+                            {{ form.rut }}
+                            {% if form.rut.errors %}<div class="text-danger small mt-1">{{ form.rut.errors|striptags }}</div>{% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.telefono.id_for_label }}" class="form-label">{{ form.telefono.label }}</label>
+                            {{ form.telefono }}
+                            {% if form.telefono.errors %}<div class="text-danger small mt-1">{{ form.telefono.errors|striptags }}</div>{% endif %}
+                        </div>
+
+                        <div class="row">
+                             <div class="col-md-6 mb-3">
+                                <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                                {{ form.password }}
+                                {% if form.password.errors %}<div class="text-danger small mt-1">{{ form.password.errors|striptags }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.password_confirmation.id_for_label }}" class="form-label">{{ form.password_confirmation.label }}</label>
+                                {{ form.password_confirmation }}
+                                {% if form.password_confirmation.errors %}<div class="text-danger small mt-1">{{ form.password_confirmation.errors|striptags }}</div>{% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Registrar Cuenta</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="{% url 'agencia:iniciar_sesion' %}">¿Ya tienes una cuenta? ¡Inicia Sesión!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const phoneInputField = document.querySelector("#id_telefono");
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        initialCountry: "cl",
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+    const form = phoneInputField.closest("form");
+    form.addEventListener("submit", () => {
+        const fullNumber = phoneInput.getNumber();
+        phoneInputField.value = fullNumber;
+    });
+</script>
+{% endblock %}

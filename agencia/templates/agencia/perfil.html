@@ -1,0 +1,46 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Mi Perfil - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Mi Perfil</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Información de la Cuenta</h5>
+
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Nombre Completo:</div>
+                        <div class="col-sm-8 fw-bold">{{ user.first_name }} {{ user.last_name }}</div>
+                    </div>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Correo Electrónico:</div>
+                        <div class="col-sm-8 fw-bold">{{ user.email }}</div>
+                    </div>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">RUT:</div>
+                        <div class="col-sm-8 fw-bold">{{ user.cliente.rut }}</div>
+                    </div>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Teléfono:</div>
+                        <div class="col-sm-8 fw-bold">{{ user.cliente.telefono }}</div>
+                    </div>
+                    <hr>
+
+                    <div class="mt-4 text-end">
+                        <a href="{% url 'agencia:editar_perfil' %}" class="btn btn-secondary">Editar Perfil</a>
+                        <a href="{% url 'agencia:password_change' %}" class="btn btn-accent">Cambiar Contraseña</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

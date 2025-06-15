@@ -1,0 +1,14 @@
+{% extends "agencia/base.html" %}
+{% block title %}Contraseña Cambiada{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card text-center shadow-sm">
+        <div class="card-body p-5">
+            <h2 class="card-title">¡Contraseña cambiada con éxito!</h2>
+            <p>Tu contraseña ha sido actualizada.</p>
+            <a href="{% url 'agencia:perfil_usuario' %}" class="btn btn-accent mt-3">Volver al Perfil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

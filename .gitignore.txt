@@ -1,0 +1,17 @@
+# Ignorar el Entorno Virtual
+venv/
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Ignorar la base de datos local (si usáramos SQLite)
+db.sqlite3
+*.sqlite3
+
+# Ignorar los archivos subidos por los usuarios (imágenes, etc.)
+media/
+
+# Ignorar archivos de configuración de IDEs
+.vscode/
+.idea/

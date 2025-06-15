@@ -1,0 +1,28 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm text-center border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">¿Estás seguro?</h2>
+                </div>
+                <div class="card-body p-5">
+                    <p class="lead">Estás a punto de eliminar permanentemente el paquete:</p>
+                    <h4 class="fw-bold my-4">"{{ paquete.descripcion }}"</h4>
+                    <p class="text-danger fw-bold">Esta acción no se puede deshacer.</p>
+                    
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <a href="{% url 'agencia:gestionar_paquetes' %}" class="btn btn-secondary btn-lg">Cancelar y Volver</a>
+                        <button type="submit" class="btn btn-danger btn-lg ms-2">Sí, Eliminar Permanentemente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

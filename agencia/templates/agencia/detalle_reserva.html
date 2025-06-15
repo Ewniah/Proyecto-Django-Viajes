@@ -1,0 +1,62 @@
+{% extends "agencia/base.html" %}
+{% load agencia_extras %}
+
+{% block title %}Detalle de Reserva N°{{ reserva.id_reserva }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Detalle de la Reserva N°{{ reserva.id_reserva }}</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark-pizarra text-white">
+                    <h5 class="mb-0">Paquete: {{ reserva.id_paquete.descripcion }}</h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <h5 class="card-title">Datos de la Reserva</h5>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Fecha de Reserva:</div>
+                        <div class="col-sm-8 fw-bold">{{ reserva.fecha_reserva|date:"d F, Y" }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Estado Actual:</div>
+                        <div class="col-sm-8 fw-bold">{{ reserva.estado }}</div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="card-title">Información del Paquete</h5>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Destino:</div>
+                        <div class="col-sm-8 fw-bold">{{ reserva.id_paquete.destino }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Fechas del Viaje:</div>
+                        <div class="col-sm-8 fw-bold">{{ reserva.id_paquete.fecha_inicio|date:"d/m/Y" }} al {{ reserva.id_paquete.fecha_termino|date:"d/m/Y" }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Precio del Paquete:</div>
+                        <div class="col-sm-8 fw-bold" style="color: var(--color-verde-esmeralda);">${{ reserva.id_paquete.precio|punto_mil }} CLP</div>
+                    </div>
+
+                    {% if reserva.estado == 'Pagado' and reserva.pago_set.first %}
+                    <hr class="my-4">
+                    <h5 class="card-title">Información del Pago</h5>
+                     <div class="row mb-2">
+                        <div class="col-sm-4 text-muted">Método de Pago:</div>
+                        <div class="col-sm-8 fw-bold">{{ reserva.pago_set.first.metodo_pago }}</div>
+                    </div>
+                    {% endif %}
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'agencia:mis_reservas' %}" class="btn btn-outline-secondary">← Volver a Mis Reservas</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

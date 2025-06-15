@@ -1,0 +1,79 @@
+{% extends "agencia/base.html" %}
+{% load static %}
+
+{% block title %}Bienvenido a Viajes Bonitos{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center text-white d-flex align-items-center justify-content-center mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Explora Destinos Inolvidables</h1>
+        <p class="lead">Las mejores ofertas para tus próximas vacaciones.</p>
+    </div>
+</div>
+
+<div class="container">
+    <section class="text-center my-5 py-5 section-bg-transparent">
+        <h2 class="fw-bold mb-5">¿Por Qué Viajar Con Nosotros?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+               <div class="fa-stack fa-2x mb-3 text-primary-custom">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-shield-alt fa-stack-1x fa-inverse"></i>
+               </div>
+               <h5 class="fw-bold">Seguridad y Confianza</h5>
+               <p class="text-muted px-3">Tu tranquilidad es nuestra prioridad. Viaja seguro con nuestro respaldo y soporte 24/7.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="fa-stack fa-2x mb-3 text-primary-custom">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-award fa-stack-1x fa-inverse"></i>
+               </div>
+               <h5 class="fw-bold">Calidad Garantizada</h5>
+               <p class="text-muted px-3">Seleccionamos los mejores hoteles y tours para asegurar una experiencia inolvidable.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="fa-stack fa-2x mb-3 text-primary-custom">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-hand-holding-dollar fa-stack-1x fa-inverse"></i>
+               </div>
+               <h5 class="fw-bold">Precios Justos</h5>
+               <p class="text-muted px-3">Ofrecemos las mejores tarifas del mercado sin sacrificar la calidad de tus vacaciones.</p>
+            </div>
+        </div>
+   </section>
+
+    <section class="my-5 py-5 section-bg-transparent">
+        <h2 class="text-center fw-bold mb-5">Lo Que Dicen Nuestros Clientes</h2>
+        <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="px-5 text-center">
+                        <p class="fs-5 fst-italic">"¡El viaje a la Patagonia fue simplemente espectacular! La organización fue impecable. Totalmente recomendados."</p>
+                        <strong class="d-block mt-3">María González</strong>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="px-5 text-center">
+                        <p class="fs-5 fst-italic">"Nunca imaginé que el desierto de Atacama pudiera ser tan mágico. Gracias a Viajes Bonitos por una experiencia única."</p>
+                        <strong class="d-block mt-3">Juan Pérez</strong>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section class="py-5 bg-cta text-white text-center">
+    <div class="container">
+        <h2 class="display-6 fw-bold">¿Listo para tu próxima aventura?</h2>
+        <p>Explora nuestros paquetes y encuentra el viaje de tus sueños hoy mismo.</p>
+        <a href="{% url 'agencia:listar_paquetes' %}" class="btn btn-outline-light btn-lg fw-bold mt-3">Ver Todos los Paquetes</a>
+    </div>
+</section>
+{% endblock %}

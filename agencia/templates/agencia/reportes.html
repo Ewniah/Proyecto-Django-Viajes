@@ -1,0 +1,49 @@
+{% extends "agencia/base.html" %}
+{% load agencia_extras %}
+
+{% block title %}Dashboard de Reportes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Dashboard de Reportes</h1>
+
+    <div class="row text-center">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Ingresos Totales (Pagado)</h5>
+                    <p class="card-text display-4 fw-bold" style="color: var(--color-verde-esmeralda);">
+                        ${{ ingresos_totales|punto_mil }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Número Total de Reservas</h5>
+                    <p class="card-text display-4 fw-bold" style="color: var(--color-naranja-vivido);">
+                        {{ total_reservas }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">Ranking de Paquetes Más Populares</h5>
+        </div>
+        <div class="list-group list-group-flush">
+            {% for paquete in paquetes_populares %}
+                <a href="{% url 'agencia:detalle_paquete' id_paquete=paquete.id_paquete %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    {{ paquete.descripcion }}
+                    <span class="badge rounded-pill" style="background-color: var(--color-gris-carbon);">{{ paquete.num_reservas }} reservas</span>
+                </a>
+            {% empty %}
+                <li class="list-group-item">Aún no hay datos de reservas para mostrar.</li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

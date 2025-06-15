@@ -1,0 +1,92 @@
+{% extends "agencia/base.html" %}
+{% load static %}
+{% load agencia_extras %}
+
+{% block title %}{{ paquete.descripcion }} - Agencia de Viajes{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">{{ paquete.descripcion }}</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <article>
+                
+                <figure class="mb-4">
+                    {% with imagenes=paquete.imagenes.all %}
+                        {% if imagenes %}
+                            <div id="carouselPaqueteImagenes" class="carousel slide shadow-lg rounded" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    {% for imagen in imagenes %}
+                                        <button type="button" data-bs-target="#carouselPaqueteImagenes" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                                    {% endfor %}
+                                </div>
+                                <div class="carousel-inner rounded">
+                                    {% for imagen in imagenes %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img src="{{ imagen.imagen.url }}" class="d-block w-100" alt="Imagen de {{ paquete.destino }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPaqueteImagenes" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselPaqueteImagenes" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            </div>
+                        {% else %}
+                            <img class="img-fluid rounded shadow-lg" src="https://placehold.co/900x400/333333/FFFFFF?text=Imagen+no+disponible" alt="Imagen no disponible">
+                        {% endif %}
+                    {% endwith %}
+                </figure>
+                <section class="mb-5">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Descripción</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#services" type="button" role="tab" aria-controls="services" aria-selected="false">Servicios Incluidos</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content card p-4" id="myTabContent">
+                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            <p class="fs-5">Sumérgete en la increíble experiencia de viajar a {{ paquete.destino }}. Este paquete está diseñado para ofrecerte la máxima comodidad y aventura. Disfruta de paisajes espectaculares, cultura vibrante y momentos que atesorarás para siempre.</p>
+                        </div>
+                        <div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="services-tab">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent"><i class="fas fa-plane me-2" style="color: var(--color-naranja-vivido);"></i><strong>Vuelo:</strong> {{ paquete.vuelo|default:"No especificado" }}</li>
+                                <li class="list-group-item bg-transparent"><i class="fas fa-hotel me-2" style="color: var(--color-naranja-vivido);"></i><strong>Alojamiento:</strong> {{ paquete.alojamiento|default:"No especificado" }}</li>
+                                <li class="list-group-item bg-transparent"><i class="fas fa-map-signs me-2" style="color: var(--color-naranja-vivido);"></i><strong>Tour:</strong> {{ paquete.tour|default:"No incluido" }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow" style="position: sticky; top: 100px;">
+                <div class="card-body text-center">
+                    <span class="text-muted">Precio por persona</span>
+                    <h3 class="card-title display-5 fw-bold" style="color: var(--color-verde-esmeralda);">${{ paquete.precio|punto_mil }} CLP</h3>
+                    <hr>
+                    <div class="mb-3">
+                        <p class="mb-1"><strong><i class="fas fa-calendar-alt me-2"></i>Fechas del Viaje</strong></p>
+                        <p class="text-muted">{{ paquete.fecha_inicio|date:"d M, Y" }} - {{ paquete.fecha_termino|date:"d M, Y" }}</p>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <form action="{% url 'agencia:crear_reserva' id_paquete=paquete.id_paquete %}" method="post" class="d-grid">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">¡Reservar Ahora!</button>
+                        </form>
+                        <a href="{% url 'agencia:listar_paquetes' %}" class="btn btn-outline-secondary">Volver a la Lista</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
