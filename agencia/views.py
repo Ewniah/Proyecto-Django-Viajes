@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from .forms import RegistroForm, UserUpdateForm, ClienteUpdateForm, PaqueteViajeForm, ImagenPaqueteFormSet
 from django.db.models import Sum, Count
 from django.core.mail import send_mail
+import csv
+from django.http import HttpResponse
 
 # --- Vistas Públicas de Paquetes ---
 
@@ -291,3 +293,25 @@ def cambiar_rol_usuario_view(request, user_id):
         messages.success(request, f"Se ha cambiado el rol de {usuario_a_modificar.username} correctamente.")
 
     return redirect('agencia:gestionar_roles')
+
+@login_required
+@user_passes_test(es_admin)
+def descargar_reporte_reservas_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="reporte_reservas.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ID Reserva', 'RUT Cliente', 'Nombre Cliente', 'Paquete', 'Destino', 'Fecha Reserva', 'Estado'])
+
+    reservas = Reserva.objects.all().select_related('rut_cliente__user', 'id_paquete')
+    for reserva in reservas:
+        writer.writerow([
+            reserva.id_reserva,
+            reserva.rut_cliente.rut,
+            reserva.rut_cliente.user.get_full_name(),
+            reserva.id_paquete.descripcion,
+            reserva.id_paquete.destino,
+            reserva.fecha_reserva.strftime('%Y-%m-%d'),
+            reserva.estado
+        ])
+
+    return response

@@ -60,4 +60,7 @@ urlpatterns = [
     path('admin-paquetes/crear/', views.crear_paquete_view, name='crear_paquete'),
     path('admin-roles/', views.gestionar_roles_view, name='gestionar_roles'),
     path('admin-roles/cambiar/<int:user_id>/', views.cambiar_rol_usuario_view, name='cambiar_rol'),
+
+    path('reportes/', views.reportes_view, name='reportes'),
+    path('reportes/descargar-csv/', views.descargar_reporte_reservas_csv, name='descargar_reporte_csv'),    
 ]

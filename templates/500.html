@@ -1,0 +1,16 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Error del Servidor{% endblock %}
+
+{% block content %}
+<div class="container my-5 text-center">
+    <div class="card shadow-sm p-5">
+        <h1 class="display-1 fw-bold text-danger">500</h1>
+        <h2 class="card-title">Error Interno del Servidor</h2>
+        <p class="lead">Lo sentimos, ha ocurrido un error inesperado en nuestros sistemas. Ya hemos sido notificados y estamos trabajando para solucionarlo.</p>
+        <div class="mt-4">
+            <a href="{% url 'agencia:inicio' %}" class="btn btn-primary">Volver a la Página de Inicio</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

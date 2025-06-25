@@ -183,6 +183,23 @@ class PaqueteViajeForm(forms.ModelForm):
             'fecha_termino': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
+    # ---- MÉTODO DE VALIDACIÓN AÑADIDO ----
+    def clean(self):
+        # Llama a la lógica de limpieza original del formulario
+        cleaned_data = super().clean()
+        
+        # Obtenemos los valores de las fechas (si pasaron la validación inicial)
+        fecha_inicio = cleaned_data.get("fecha_inicio")
+        fecha_termino = cleaned_data.get("fecha_termino")
+
+        # Nos aseguramos de que ambos campos tengan datos antes de comparar
+        if fecha_inicio and fecha_termino:
+            if fecha_termino < fecha_inicio:
+                # Si la fecha de término es anterior, añadimos un error al campo 'fecha_termino'
+                self.add_error('fecha_termino', "La fecha de término no puede ser anterior a la fecha de inicio.")
+        
+        return cleaned_data
+
 ImagenPaqueteFormSet = inlineformset_factory(
     PaqueteViaje,  # Modelo Padre
     ImagenPaquete, # Modelo Hijo

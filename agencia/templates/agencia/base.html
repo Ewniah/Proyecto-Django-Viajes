@@ -41,12 +41,11 @@
                                 
                                 {% if user.is_staff %}
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item fw-bold" href="{% url 'agencia:reportes' %}">Ver Reportes</a></li>
                                     <li><a class="dropdown-item fw-bold" href="{% url 'agencia:gestionar_paquetes' %}">Gestionar Paquetes</a></li>
-                                    <li><hr class="dropdown-divider"></li>
                                     {% if user.is_superuser %}
                                         <li><a class="dropdown-item fw-bold" href="{% url 'agencia:gestionar_roles' %}">Gestionar Roles</a></li>
-                                        {% endif %}
+                                    {% endif %}
+                                    <li><a class="dropdown-item fw-bold" href="{% url 'agencia:reportes' %}">Ver Reportes</a></li>
                                 {% endif %}
 
                                 <li><hr class="dropdown-divider"></li>

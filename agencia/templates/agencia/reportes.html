@@ -5,12 +5,17 @@
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Dashboard de Reportes</h1>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="page-title-contrast fw-bold mb-0">Dashboard de Reportes</h1>
+        <a href="{% url 'agencia:descargar_reporte_csv' %}" class="btn btn-accent">
+            <i class="fas fa-download me-2"></i>Descargar Reporte CSV
+        </a>
+    </div>
 
     <div class="row text-center">
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <h5 class="card-title text-muted">Ingresos Totales (Pagado)</h5>
                     <p class="card-text display-4 fw-bold" style="color: var(--color-verde-esmeralda);">
                         ${{ ingresos_totales|punto_mil }}
@@ -20,7 +25,7 @@
         </div>
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <h5 class="card-title text-muted">Número Total de Reservas</h5>
                     <p class="card-text display-4 fw-bold" style="color: var(--color-naranja-vivido);">
                         {{ total_reservas }}
@@ -38,7 +43,7 @@
             {% for paquete in paquetes_populares %}
                 <a href="{% url 'agencia:detalle_paquete' id_paquete=paquete.id_paquete %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     {{ paquete.descripcion }}
-                    <span class="badge rounded-pill" style="background-color: var(--color-gris-carbon);">{{ paquete.num_reservas }} reservas</span>
+                    <span class="badge rounded-pill" style="background-color: var(--color-gris-carbon);">{{ paquete.num_reservas }} {% if paquete.num_reservas == 1 %}reserva{% else %}reservas{% endif %}</span>
                 </a>
             {% empty %}
                 <li class="list-group-item">Aún no hay datos de reservas para mostrar.</li>

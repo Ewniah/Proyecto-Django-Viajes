@@ -1,0 +1,16 @@
+{% extends "agencia/base.html" %}
+
+{% block title %}Página no Encontrada{% endblock %}
+
+{% block content %}
+<div class="container my-5 text-center">
+    <div class="card shadow-sm p-5">
+        <h1 class="display-1 fw-bold" style="color: var(--color-naranja-vivido);">404</h1>
+        <h2 class="card-title">Página no Encontrada</h2>
+        <p class="lead">Lo sentimos, la página que estás buscando no existe o ha sido movida.</p>
+        <div class="mt-4">
+            <a href="{% url 'agencia:inicio' %}" class="btn btn-primary">Volver a la Página de Inicio</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
