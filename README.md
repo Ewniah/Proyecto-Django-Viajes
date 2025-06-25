@@ -39,8 +39,8 @@ Para ejecutar este proyecto en un entorno de desarrollo local, sigue estos pasos
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://github.com/TU_USUARIO/TU_REPOSITORIO.git](https://github.com/TU_USUARIO/TU_REPOSITORIO.git)
-    cd nombre-del-repositorio
+    git clone [https://github.com/Ewniah/Proyecto-Django-Viajes](https://github.com/Ewniah/Proyecto-Django-Viajes)
+    cd Proyecto-Django-Viajes
     ```
 
 2.  **Crear y activar un entorno virtual:**
