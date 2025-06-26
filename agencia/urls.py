@@ -62,5 +62,14 @@ urlpatterns = [
     path('admin-roles/cambiar/<int:user_id>/', views.cambiar_rol_usuario_view, name='cambiar_rol'),
 
     path('reportes/', views.reportes_view, name='reportes'),
-    path('reportes/descargar-csv/', views.descargar_reporte_reservas_csv, name='descargar_reporte_csv'),    
+    path('reportes/descargar-csv/', views.descargar_reporte_reservas_csv, name='descargar_reporte_csv'),
+
+    path('carrito/', views.cart_detail_view, name='cart_detail'),
+    path('carrito/añadir/<int:id_paquete>/', views.cart_add_view, name='cart_add'),
+    path('carrito/eliminar/<int:id_paquete>/', views.cart_remove_view, name='cart_remove'),
+
+    path('carrito/eliminar/<int:id_paquete>/', views.cart_remove_view, name='cart_remove'),
+    path('checkout/', views.checkout_view, name='checkout'),
+
+    
 ]

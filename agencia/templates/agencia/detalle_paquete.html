@@ -78,9 +78,9 @@
                         <p class="text-muted">{{ paquete.fecha_inicio|date:"d M, Y" }} - {{ paquete.fecha_termino|date:"d M, Y" }}</p>
                     </div>
                     <div class="d-grid gap-2">
-                        <form action="{% url 'agencia:crear_reserva' id_paquete=paquete.id_paquete %}" method="post" class="d-grid">
+                        <form action="{% url 'agencia:cart_add' id_paquete=paquete.id_paquete %}" method="post" class="d-grid">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">¡Reservar Ahora!</button>
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">Añadir al Carrito</button>
                         </form>
                         <a href="{% url 'agencia:listar_paquetes' %}" class="btn btn-outline-secondary">Volver a la Lista</a>
                     </div>

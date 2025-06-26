@@ -131,3 +131,5 @@ NUMBER_GROUPING = 3
 
 # Configuración de Email (para desarrollo)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CART_SESSION_ID = 'cart'

@@ -1,4 +1,5 @@
 {% extends "agencia/base.html" %}
+{% load agencia_extras %}
 
 {% block title %}Mis Reservas - Agencia de Viajes{% endblock %}
 
@@ -9,34 +10,52 @@
     {% if reservas %}
         <div class="list-group">
             {% for reserva in reservas %}
-                <a href="{% url 'agencia:detalle_reserva' id_reserva=reserva.id_reserva %}" class="list-group-item list-group-item-action flex-column align-items-start mb-3 shadow-sm rounded">
+                <!-- Se elimina la clase 'list-group-item-action' para que el contenedor no parezca clickeable -->
+                <div class="list-group-item flex-column align-items-start mb-3 shadow-sm rounded">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1 fw-bold">{{ reserva.id_paquete.descripcion }}</h5>
+                        <!-- El título del paquete ahora es el único enlace al detalle -->
+                        <h5 class="mb-1 fw-bold">
+                            <a href="{% url 'agencia:detalle_reserva' id_reserva=reserva.id_reserva %}" class="text-decoration-none text-dark stretched-link">
+                                {{ reserva.id_paquete.descripcion }}
+                            </a>
+                        </h5>
                         <small class="text-muted">{{ reserva.fecha_reserva|date:"d M, Y" }}</small>
                     </div>
                     <p class="mb-1">
                         <strong>Destino:</strong> {{ reserva.id_paquete.destino }} <br>
                         <strong>ID de Reserva:</strong> {{ reserva.id_reserva }}
                     </p>
-                    <div class="mt-2 d-flex align-items-center">
-                        <strong class="me-2">Estado:</strong>
+                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong class="me-2">Estado:</strong>
+                            {% if reserva.estado == 'Reservado' %}
+                                <span class="badge bg-info text-dark">Reservado</span>
+                            {% elif reserva.estado == 'Pagado' %}
+                                <span class="badge" style="background-color: var(--color-verde-esmeralda);">Pagado</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ reserva.estado }}</span>
+                            {% endif %}
+                        </div>
                         
-                        {% if reserva.estado == 'Reservado' %}
-                            <span class="badge bg-info text-dark">Reservado</span>
-                        {% elif reserva.estado == 'Pagado' %}
-                            <span class="badge" style="background-color: var(--color-verde-esmeralda);">Pagado</span>
-                        {% else %}
-                            <span class="badge bg-secondary">{{ reserva.estado }}</span>
-                        {% endif %}
-
-                        {% if reserva.estado != 'Cancelada' %}
-                        <form action="{% url 'agencia:cancelar_reserva' id_reserva=reserva.id_reserva %}" method="post" class="ms-auto">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
-                        </form>
-                        {% endif %}
+                        <!-- Contenedor para los botones de acción -->
+                        <div class="d-flex gap-2">
+                            <!-- Si la reserva está pendiente de pago, mostramos el botón para pagar -->
+                            {% if reserva.estado == 'Reservado' %}
+                                <!-- BOTÓN CORREGIDO: ahora es un enlace independiente y con btn-sm -->
+                                <a href="{% url 'agencia:procesar_pago' id_reserva=reserva.id_reserva %}" class="btn btn-sm btn-primary">Pagar Ahora</a>
+                            {% endif %}
+                            
+                            <!-- Botón de Cancelar (solo si no está ya cancelada) -->
+                            {% if reserva.estado != 'Cancelada' %}
+                                <form action="{% url 'agencia:cancelar_reserva' id_reserva=reserva.id_reserva %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar Reserva</button>
+                                </form>
+                            {% endif %}
+                        </div>
                     </div>
-                </a> {% endfor %}
+                </div>
+            {% endfor %}
         </div>
     {% else %}
         <div class="card text-center shadow-sm">

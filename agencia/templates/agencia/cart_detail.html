@@ -1,0 +1,66 @@
+{% extends "agencia/base.html" %}
+{% load agencia_extras %}
+
+{% block title %}Mi Carrito de Compras{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5 text-center page-title-contrast display-5 fw-bold">Mi Carrito</h1>
+    
+    {% if cart|length > 0 %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Paquetes en tu Carrito</h5>
+                    <div class="list-group list-group-flush">
+                        {% for item in cart %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <!-- El nombre del paquete ahora es un enlace -->
+                                <a href="{% url 'agencia:detalle_paquete' id_paquete=item.paquete.id_paquete %}">
+                                    {{ item.paquete.descripcion }}
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <strong class="me-3">${{ item.precio|punto_mil }}</strong>
+                                    <form action="{% url 'agencia:cart_remove' id_paquete=item.paquete.id_paquete %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar del carrito">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen del Carrito</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent fs-5">
+                            <strong>Total</strong>
+                            <strong>${{ cart.get_total_price|punto_mil }} CLP</strong>
+                        </li>
+                    </ul>
+                    <div class="d-grid mt-3">
+                        <!-- El botón ahora apunta a la nueva vista de checkout -->
+                        <a href="{% url 'agencia:checkout' %}" class="btn btn-primary btn-lg">Proceder a la Reserva</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card text-center shadow-sm">
+        <div class="card-body p-5">
+            <h5 class="card-title">Tu carrito está vacío</h5>
+            <p class="card-text">Aún no has añadido ningún paquete de viaje.</p>
+            <a href="{% url 'agencia:listar_paquetes' %}" class="btn btn-accent mt-3">Ver Paquetes</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

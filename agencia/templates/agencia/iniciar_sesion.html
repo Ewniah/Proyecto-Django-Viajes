@@ -11,19 +11,23 @@
                     <h2 class="card-title text-center mb-4 fw-bold">Iniciar Sesión</h2>
                     
                     <form method="post" novalidate>
+                        <!-- ¡AQUÍ ESTÁ LA CORRECCIÓN! Añadimos el token de seguridad -->
                         {% csrf_token %}
 
+                        <!-- Muestra errores generales si el login falla -->
                         {% if form.non_field_errors %}
                             <div class="alert alert-danger" role="alert">
                                 Tu correo o contraseña son incorrectos. Por favor, inténtalo de nuevo.
                             </div>
                         {% endif %}
                         
+                        <!-- Campo Correo Electrónico -->
                         <div class="mb-3">
                             <label for="id_username" class="form-label">Correo Electrónico</label>
                             <input type="email" name="username" class="form-control" id="id_username" placeholder="Ingresa tu correo electrónico" required>
                         </div>
 
+                        <!-- Campo Contraseña -->
                         <div class="mb-3">
                             <label for="id_password" class="form-label">Contraseña</label>
                             <input type="password" name="password" class="form-control" id="id_password" placeholder="Ingresa tu contraseña" required>

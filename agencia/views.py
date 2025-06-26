@@ -9,6 +9,8 @@ from django.db.models import Sum, Count
 from django.core.mail import send_mail
 import csv
 from django.http import HttpResponse
+from .cart import Cart
+from django.db import transaction
 
 # --- Vistas Públicas de Paquetes ---
 
@@ -315,3 +317,63 @@ def descargar_reporte_reservas_csv(request):
         ])
 
     return response
+
+@login_required
+def cart_add_view(request, id_paquete):
+    cart = Cart(request)
+    paquete = get_object_or_404(PaqueteViaje, id_paquete=id_paquete)
+    cart.add(paquete=paquete)
+    messages.success(request, f'"{paquete.descripcion}" ha sido añadido a tu carrito.')
+    return redirect('agencia:cart_detail')
+
+@login_required
+def cart_remove_view(request, id_paquete):
+    cart = Cart(request)
+    paquete = get_object_or_404(PaqueteViaje, id_paquete=id_paquete)
+    cart.remove(paquete)
+    messages.info(request, f'"{paquete.descripcion}" ha sido eliminado de tu carrito.')
+    return redirect('agencia:cart_detail')
+
+@login_required
+def cart_detail_view(request):
+    cart = Cart(request)
+    return render(request, 'agencia/cart_detail.html', {'cart': cart})
+
+@login_required
+@transaction.atomic # Usamos una transacción para asegurar que todas las reservas se creen o ninguna.
+def checkout_view(request):
+    cart = Cart(request)
+    if len(cart) == 0:
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('agencia:cart_detail')
+
+    cliente = request.user.cliente
+    reservas_creadas = 0
+    
+    for item in cart:
+        paquete = item['paquete']
+        
+        # Verificamos si ya existe una reserva activa para este paquete
+        reserva_existente = Reserva.objects.filter(
+            rut_cliente=cliente, 
+            id_paquete=paquete
+        ).exclude(estado='Cancelada').exists()
+
+        if not reserva_existente:
+            Reserva.objects.create(
+                rut_cliente=cliente,
+                id_paquete=paquete,
+                fecha_reserva=timezone.now().date(),
+                estado='Reservado'
+            )
+            reservas_creadas += 1
+    
+    # Limpiamos el carrito después de crear las reservas
+    cart.clear()
+    
+    if reservas_creadas > 0:
+        messages.success(request, f'¡Se han creado {reservas_creadas} nueva(s) reserva(s)! Ahora puedes proceder al pago individual en "Mis Reservas".')
+    else:
+        messages.info(request, 'No se crearon nuevas reservas, ya tenías reservas activas para los paquetes en tu carrito.')
+
+    return redirect('agencia:mis_reservas')
